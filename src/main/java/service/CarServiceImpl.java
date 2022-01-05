@@ -4,15 +4,21 @@ import model.Car;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class CarServiceImpl implements CarService {
     @Override
-    public List<Car> getCars(List<Car> cars, int count) {
+    public void getTable(List<Car> cars, String count) {
 
-        List<Car> carList = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            carList.add(cars.get(i));
+        int count2 = 0;
+        if (count != null) {
+            count2 = Integer.parseInt(count.replaceAll("[^0-9]", ""));
         }
-        return carList;
+        if (count2 >= 5) {
+            count2 = 5;
+        }
+        Stream streamCar = cars.stream();
+        streamCar.limit(count2)
+                .forEach(s -> System.out.println(s));
     }
 }
